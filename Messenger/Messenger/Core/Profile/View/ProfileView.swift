@@ -10,12 +10,14 @@ import PhotosUI
 
 struct ProfileView: View {
     @StateObject var viewModel = ProfileViewModel()
+    let user: User
     
     var body: some View {
         VStack {
             // header
             VStack {
                 PhotosPicker(selection: $viewModel.selectedItem) {
+                    // 내부적 처리는 뷰 모델을 통해 하는것을 권장함 
                     if let profileImage = viewModel.profileImage {
                         profileImage
                             .resizable()
@@ -23,13 +25,14 @@ struct ProfileView: View {
                             .frame(width: 80, height: 80)
                             .clipShape(Circle())
                     } else {
-                        Image(systemName: "person.circle.fill")
+                        Image(user.profileImageUrl ?? "")
                             .resizable()
+                            .scaledToFill()
                             .frame(width: 80, height: 80)
-                            .foregroundStyle(Color(.systemGray4))
+                            .clipShape(Circle())
                     }
                 }
-                Text("Bruce Wayne")
+                Text(user.fullname)
                     .font(.title2)
                     .fontWeight(.semibold)
             }
@@ -67,5 +70,6 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(user: User.MOCK_USER)
+
 }
