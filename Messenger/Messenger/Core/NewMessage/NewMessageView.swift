@@ -39,7 +39,7 @@ struct NewMessageView: View {
                                 .fontWeight(.semibold)
                             
                             Spacer()
-                        }
+                        } //:HSTACK
                         .padding(.leading)
                         
                         Divider()
