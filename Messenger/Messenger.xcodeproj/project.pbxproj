@@ -21,6 +21,7 @@
 		645003512B9B022D00FABF08 /* SettingsOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645003502B9B022D00FABF08 /* SettingsOptionsViewModel.swift */; };
 		645003532B9D82E000FABF08 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645003522B9D82E000FABF08 /* ProfileViewModel.swift */; };
 		645003552B9D865400FABF08 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645003542B9D865400FABF08 /* User.swift */; };
+		645003582B9D8C5700FABF08 /* CircularProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645003572B9D8C5700FABF08 /* CircularProfileImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		645003502B9B022D00FABF08 /* SettingsOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsOptionsViewModel.swift; sourceTree = "<group>"; };
 		645003522B9D82E000FABF08 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		645003542B9D865400FABF08 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		645003572B9D8C5700FABF08 /* CircularProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProfileImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		645003342B9AD81100FABF08 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				645003562B9D8C3400FABF08 /* Components */,
 				6450034B2B9B01BD00FABF08 /* Profile */,
 				645003482B9AF1E400FABF08 /* NewMessage */,
 				645003452B9AECE000FABF08 /* ActiveNow */,
@@ -209,6 +212,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		645003562B9D8C3400FABF08 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				645003572B9D8C5700FABF08 /* CircularProfileImageView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -284,6 +295,7 @@
 				6450034A2B9AF20300FABF08 /* NewMessageView.swift in Sources */,
 				645003472B9AECFC00FABF08 /* ActiveNowView.swift in Sources */,
 				645003262B9AD59D00FABF08 /* ContentView.swift in Sources */,
+				645003582B9D8C5700FABF08 /* CircularProfileImageView.swift in Sources */,
 				645003422B9AE86400FABF08 /* InboxView.swift in Sources */,
 				645003242B9AD59D00FABF08 /* MessengerApp.swift in Sources */,
 				645003532B9D82E000FABF08 /* ProfileViewModel.swift in Sources */,

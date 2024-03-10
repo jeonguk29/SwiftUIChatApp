@@ -44,11 +44,7 @@ struct InboxView: View {
                                     // (Navigation Link 의 value type 을 파악해서 넘김
                          */
                         NavigationLink(value: user) {
-                            Image(user.profileImageUrl ?? "")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 32, height: 32)
-                                .clipShape(Circle())
+                            CircularProfileImageView(user: user, size: .xSmall)
                         }
                         Text("Chats")
                             .font(.title)
