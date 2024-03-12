@@ -27,5 +27,11 @@ class UserService {
         self.currentUser = user
         print("DEBUG: current user in service is \(user)")
     }
-
+    
+    /// 채팅을 위한 모든 사용자 정보 가져오는 메서드
+    /// - Returns: 파이어베이스에 저장된 모든 사용자들을 반환
+    static func fetchAllUsers() async throws -> [User] {
+        let snapshot = try await Firestore.firestore().collection("users").getDocuments()
+        return snapshot.documents.compactMap({ try? $0.data(as: User.self) })
+    }
 }

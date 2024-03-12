@@ -18,8 +18,8 @@ class AuthService {
     // 로그인, 로그아웃을 하더라도 View가 반영되지 않을 수 있음 init 될때마다 userSession가 새로 생기기 때문임
     
     init() {
-        self.userSession = Auth.auth().currentUser // 로그인 했다면 로그인 정보 로컬에 저장됨 
-        Task { try await UserService.shared.fetchCurrentUser() } // 로그인 했다면 정보 가져오기
+        self.userSession = Auth.auth().currentUser // 로그인 했다면 로그인 정보 로컬에 저장됨
+        loadCurrentUserData() // 로그인 했다면 정보 가져오기
         print("User session id is \(userSession?.uid)")
     }
 
@@ -28,6 +28,7 @@ class AuthService {
            do {
                let result = try await Auth.auth().signIn(withEmail: email, password: password)
                self.userSession = result.user // 로그인 하면 세션에 결과 넣어주기
+               loadCurrentUserData()
                //변경시 컨텐츠 View또한 업데이트 됨
            } catch {
                print("DEBUG: Failed to sign in user with error \(error.localizedDescription)")
@@ -40,6 +41,7 @@ class AuthService {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             try await self.uploadUserData(email: email, fullname: fullname, id: result.user.uid)
+            loadCurrentUserData()
             print("Created user \(result.user.uid)") // 등록시 uid를 반환
         } catch {
             print("DEBUG: Failed to create user with error \(error.localizedDescription)")
@@ -50,6 +52,7 @@ class AuthService {
         do {
             try Auth.auth().signOut() // sign out on backend
             self.userSession = nil // update routing logic
+            UserService.shared.currentUser = nil // 세션도 지우고 저장된 사용자 정보도 지우고
         } catch {
             print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
@@ -64,5 +67,14 @@ class AuthService {
         let user = User(fullname: fullname, email: email, profileImageUrl: nil) // 비번저장하면 소송걸림 ㅋㅋ
         guard let encodedUser = try? Firestore.Encoder().encode(user) else { return } //⭐️
         try await Firestore.firestore().collection("users").document(id).setData(encodedUser)
+    }
+    
+    
+    /// 로그인 사용자 정보를 알맞게 다시 로딩하는 메서드
+    /// 사용자 로그아웃하고 다시 다른 계정으로 로그인 하면 직전 사용자 정보가 남아있음 프로필 사진, 이름 등등
+    /// init은 앱 세션만 한번 초기화 됨 앱 종료후 다시 실행하면 정상 작동함 알맞은 로그인 사용자로
+    /// 기존에 해당 코드가 init즉 초기화 될때만 호출하여 로그아웃 이후 새로 로그인을 했을때도 호출하기 위해 분리 앱 재실행 하지 않기 위해
+    private func loadCurrentUserData() {
+        Task { try await UserService.shared.fetchCurrentUser() }
     }
 }
