@@ -32,11 +32,11 @@ enum ProfileImageSize {
 // 프로필 이미지가 너무 자주 사용됨 재사용 가능하게 만들기
 struct CircularProfileImageView: View {
 
-    let user: User
+    var user: User?
     let size: ProfileImageSize
 
     var body: some View {
-        if let imageUrl = user.profileImageUrl {
+        if let imageUrl = user?.profileImageUrl {
             Image(imageUrl)
                 .resizable()
                 .scaledToFill()

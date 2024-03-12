@@ -11,7 +11,11 @@ struct InboxView: View {
     
     @State private var showNewMessageView = false
     
-    @State private var user = User.MOCK_USER
+    @StateObject var viewModel = InboxViewModel()
+
+    private var user: User? { // 뷰모델에서 로그인 사용자를 구독하여 변경되면 값을 담을 것임 
+        return viewModel.currentUser
+    }
     
     var body: some View {
         NavigationStack {
