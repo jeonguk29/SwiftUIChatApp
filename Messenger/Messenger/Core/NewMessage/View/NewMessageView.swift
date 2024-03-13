@@ -11,6 +11,7 @@ struct NewMessageView: View {
     
     @State private var searchText = ""
     @StateObject private var viewModel = NewMessageViewModel()
+    @Binding var selectedUser: User? // 채팅을 시작할 사용자
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -44,6 +45,11 @@ struct NewMessageView: View {
                         Divider()
                             .padding(.leading, 40)
                     } //:VSTACK
+                    .onTapGesture {
+                        selectedUser = user
+                        dismiss() // 이미 풀스크린으로 올라온 화면이라 화면 내리고 채팅 뷰로 이동해야함
+                        
+                    }
                 }
             }//:SCROLL
             // 네비게이션 아이템만 사용하지 않을뿐 혼용사용 가능
@@ -63,6 +69,6 @@ struct NewMessageView: View {
 
 #Preview {
     NavigationStack {
-        NewMessageView()
+        NewMessageView(selectedUser: .constant(User.MOCK_USER))
     }
 }
