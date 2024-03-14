@@ -38,7 +38,8 @@ struct InboxView: View {
                 .frame(height: UIScreen.main.bounds.height - 120)
             }
             .onChange(of: selectedUser) {
-                showChat = true
+                showChat = true 
+                //1. 채팅할 사용자를 NewMessageView에서 선택하고 돌아오면
             }
             .navigationDestination(for: User.self, destination: { user in
                 ProfileView(user: user)
@@ -46,6 +47,7 @@ struct InboxView: View {
             .navigationDestination(isPresented: $showChat, destination: {
                 if let user = selectedUser {
                     ChatView(user: user)
+                    //2. 채팅할 사용자를 넘겨 채팅을 시작
                 }
             })
             .fullScreenCover(isPresented: $showNewMessageView, content: {

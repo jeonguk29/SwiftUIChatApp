@@ -12,8 +12,9 @@ struct ChatView: View {
     let user: User
     
     init(user: User) {
-        self.user = user
+        self.user = user //1. 초기화 될때마다 (다른 채팅하고 있는 사용자를 넣을 수 있음)
         self._viewModel = StateObject(wrappedValue: ChatViewModel(user: user))
+        // 2. 각각의 사용자를 넣으면 해당 사용자와의 대화 내용을 감지하여 불러올 수 있음
     }
     
     
@@ -36,8 +37,8 @@ struct ChatView: View {
                 
                 // messages
                 // 테스트 하기 유용 Bool.random()
-                ForEach(0...15, id: \.self) { message in
-                    ChatMessageCell(isFromCurrentUser: Bool.random())
+                ForEach(viewModel.messages) { message in
+                    ChatMessageCell(message: message)
                 }
                 
             }  //:SCROLL
