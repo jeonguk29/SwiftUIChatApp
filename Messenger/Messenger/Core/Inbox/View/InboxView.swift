@@ -13,6 +13,9 @@ struct InboxView: View {
     
     @StateObject var viewModel = InboxViewModel()
     @State private var selectedUser: User? // 채팅을 시작할
+    /*
+     NewMessageView에 해당 User 객체를 바인딩해줘서 NewMessageView에서 사용자를 선택하면 InboxView 돌와와서 해당 선택한 사용자와 함께 ChatView로 이동
+     */
     @State private var showChat = false
     
     private var user: User? { // 뷰모델에서 로그인 사용자를 구독하여 변경되면 값을 담을 것임
