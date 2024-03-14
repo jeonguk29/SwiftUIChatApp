@@ -75,6 +75,9 @@ struct InboxView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showNewMessageView.toggle()
+                        selectedUser = nil // 이걸 해줘야 동일한 사용자를 다시 선택했을때 ChatView로 들어가지지 않는 Bug해결이 가능 동일 사용자라면 onChange가 작동하지 않기 때문임
+                        
+                        
                     } label: {
                         Image(systemName: "square.and.pencil.circle.fill")
                             .resizable()
