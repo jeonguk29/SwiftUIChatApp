@@ -22,7 +22,7 @@ struct InboxRowView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
 
-                Text(message.messageText)
+                Text(message.timestampString)
                     .font(.subheadline)
                     .foregroundStyle(.gray)
                     .lineLimit(2)

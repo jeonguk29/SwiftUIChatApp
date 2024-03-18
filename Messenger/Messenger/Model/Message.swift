@@ -29,4 +29,8 @@ struct Message: Identifiable, Codable, Hashable {
     var isFromCurrentUser: Bool {
         return fromId == Auth.auth().currentUser?.uid
     } // 메시지를 왼쪽(남이 작성), 오른쪽(내가 작성)에 배치할지 파악하기 위한 변수
+    
+    var timestampString: String {
+          return timestamp.dateValue().timestampString()
+    }
 }

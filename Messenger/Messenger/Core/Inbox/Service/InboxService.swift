@@ -20,8 +20,9 @@ class InboxService {
             .document(uid)
             .collection("recent-messages")
             .order(by: "timestamp", descending: true)
-
+        
         // 기존건 처음에 다 가져오고 이후 추가된거, 수정된건 바로 반영시키기
+        // 즉 처음 사용자가 다른 사용자와 나눈 최근 메시지들을 모두 가져오고 그다음 추가, 수정된거를 반영
         query.addSnapshotListener { snapshot, _ in
             guard let changes = snapshot?.documentChanges.filter({
                 $0.type == .added || $0.type == .modified

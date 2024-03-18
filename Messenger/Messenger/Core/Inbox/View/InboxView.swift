@@ -24,23 +24,37 @@ struct InboxView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+         
+            // 리스트로 만들어야 채팅을 삭제, 추가했을 때 용이함
+            // 스크롤 뷰가 따로 노는 에러를 해결하기 위해 리스트 안에서 전체적인 UI 위치 수정
+            List {
                 ActiveNowView()
-                
-                // 리스트로 만들어야 채팅을 삭제, 추가했을때 용이함
-                List {
-                    ForEach(viewModel.recentMessages)  { message in
+                    .listRowSeparator(.hidden) // 리스트 구분선 안보이게
+                    .listRowInsets(EdgeInsets())
+                    .padding(.vertical)
+                    .padding(.horizontal, 4)
+                ForEach(viewModel.recentMessages) { message in
+                    ZStack {
+                        NavigationLink(value: message) {
+                            EmptyView()
+                        }.opacity(0.0) // 가려서 안보이게 하기 InboxRowView를 눌렀을때 이동하는 것 처럼 하기위해 ZStack을 사용
+                        
                         InboxRowView(message: message)
                     }
                 }
-                .listStyle(PlainListStyle())
-                
-                .frame(height: UIScreen.main.bounds.height - 120)
             }
+            .listStyle(PlainListStyle())
+            
+            
             .onChange(of: selectedUser) {
-                showChat = true 
+                showChat = true
                 //1. 채팅할 사용자를 NewMessageView에서 선택하고 돌아오면
             }
+            .navigationDestination(for: Message.self, destination: { message in
+                if let user = message.user {
+                    ChatView(user: user) // 메시지 누르면 채팅뷰로 이동
+                }
+            })
             .navigationDestination(for: User.self, destination: { user in
                 ProfileView(user: user)
             })
