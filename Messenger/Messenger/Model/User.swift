@@ -14,8 +14,13 @@ struct User: Codable, Identifiable, Hashable {
     let fullname: String
     let email: String
     var profileImageUrl: String?
-    
-    
+ 
+    // 계산속성으로 성, 이름 분리하기 애플에서 지원해줌 
+    var firstName: String {
+        let formatter = PersonNameComponentsFormatter()
+        let components = formatter.personNameComponents(from: fullname)
+        return components?.givenName ?? fullname
+    }
     
 }
 

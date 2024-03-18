@@ -37,8 +37,11 @@ struct ChatView: View {
                 
                 // messages
                 // 테스트 하기 유용 Bool.random()
-                ForEach(viewModel.messages) { message in
-                    ChatMessageCell(message: message)
+                // 채팅을 너무 많이 로드하면 모든 항목이 즉시 렌더링 되지 않기 때문에 필요에 따라 화면에 렌더링 하도록 구현 
+                LazyVStack {
+                    ForEach(viewModel.messages) { message in
+                        ChatMessageCell(message: message)
+                    }
                 }
                 
             }  //:SCROLL
@@ -66,6 +69,8 @@ struct ChatView: View {
             }
             .padding()
         }
+        .navigationTitle(user.fullname)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

@@ -30,10 +30,12 @@ class UserService {
     
     /// 채팅을 위한 모든 사용자 정보 가져오는 메서드
     /// - Returns: 파이어베이스에 저장된 모든 사용자들을 반환
-    static func fetchAllUsers() async throws -> [User] {
-        let snapshot = try await Firestore.firestore().collection("users").getDocuments()
-        return snapshot.documents.compactMap({ try? $0.data(as: User.self) })
-    }
+    static func fetchAllUsers(limit: Int? = nil) async throws -> [User] {
+         let query = FirestoreConstants.usersCollection
+         if let limit { query.limit(to: limit) } // 모든 사용자가 아닌 10명 정도로 제한 두기 
+         let snapshot = try await query.getDocuments()
+         return snapshot.documents.compactMap({ try? $0.data(as: User.self) })
+     }
     
     // 임의의 사용자를 가져오는 함수, 비동기 사용 불가 모든 스냅샷 리스너 작업은 컴플리션 핸들러, 콜백을 사용하여 수행됨
     static func fetchUser(withUid uid: String, completion: @escaping(User) -> Void) {

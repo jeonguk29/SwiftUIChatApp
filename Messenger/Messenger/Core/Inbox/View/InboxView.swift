@@ -24,7 +24,7 @@ struct InboxView: View {
     
     var body: some View {
         NavigationStack {
-         
+            
             // 리스트로 만들어야 채팅을 삭제, 추가했을 때 용이함
             // 스크롤 뷰가 따로 노는 에러를 해결하기 위해 리스트 안에서 전체적인 UI 위치 수정
             List {
@@ -43,6 +43,8 @@ struct InboxView: View {
                     }
                 }
             }
+            .navigationTitle("Chats")
+            .navigationBarTitleDisplayMode(.inline)
             .listStyle(PlainListStyle())
             
             
@@ -55,9 +57,15 @@ struct InboxView: View {
                     ChatView(user: user) // 메시지 누르면 채팅뷰로 이동
                 }
             })
-            .navigationDestination(for: User.self, destination: { user in
-                ProfileView(user: user)
+            .navigationDestination(for: Route.self, destination: { route in
+                switch route {
+                case .profile(let user):
+                    ProfileView(user: user)
+                case .chatView(let user):
+                    ChatView(user: user)
+                }
             })
+            
             .navigationDestination(isPresented: $showChat, destination: {
                 if let user = selectedUser {
                     ChatView(user: user)
@@ -76,8 +84,10 @@ struct InboxView: View {
                          // Navigation Link 에서 value 값을 넘겨주고 navigationDestination 으로 값을 넘겨 줄수 있음
                          // (Navigation Link 의 value type 을 파악해서 넘김
                          */
-                        NavigationLink(value: user) {
-                            CircularProfileImageView(user: user, size: .xSmall)
+                        if let user {
+                            NavigationLink(value: Route.profile(user)) {
+                                CircularProfileImageView(user: user, size: .xSmall)
+                            }
                         }
                         Text("Chats")
                             .font(.title)
