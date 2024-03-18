@@ -29,8 +29,8 @@ struct InboxView: View {
                 
                 // 리스트로 만들어야 채팅을 삭제, 추가했을때 용이함
                 List {
-                    ForEach(0...10, id:\.self) { message in
-                        InboxRowView()
+                    ForEach(viewModel.recentMessages)  { message in
+                        InboxRowView(message: message)
                     }
                 }
                 .listStyle(PlainListStyle())

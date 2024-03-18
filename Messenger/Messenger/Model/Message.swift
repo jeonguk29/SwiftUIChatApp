@@ -16,7 +16,7 @@ struct Message: Identifiable, Codable, Hashable {
     let messageText: String
     let timestamp: Timestamp // 메시지가 전송된 시간
 
-    var user: User?
+    var user: User? // 추후 작성자의 정보를 표시하기 위함(이름, 사진 등)
 
     var id: String {
         return messageId ?? NSUUID().uuidString

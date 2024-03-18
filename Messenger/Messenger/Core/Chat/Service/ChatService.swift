@@ -20,6 +20,10 @@ struct ChatService {
         let currentUserRef = FirestoreConstants.messagesCollection.document(currentUid).collection(chatPartnerId ?? "").document()
         let chatPartnerRef = FirestoreConstants.messagesCollection.document(chatPartnerId ?? "").collection(currentUid)
         
+        // 최근 주고받은 메시지 표시
+        let recentCurrentUserRef = FirestoreConstants.messagesCollection.document(currentUid).collection("recent-messages").document(chatPartnerId ?? "")
+        let recentPartnerRef = FirestoreConstants.messagesCollection.document(chatPartnerId ?? "").collection("recent-messages").document(currentUid)
+        
         let messageId = currentUserRef.documentID
         
         let message = Message(
@@ -34,6 +38,11 @@ struct ChatService {
         
         currentUserRef.setData(messageData)
         chatPartnerRef.document(messageId).setData(messageData)
+        
+        // 최근 주고받은 메시지 표시
+        recentCurrentUserRef.setData(messageData)
+        recentPartnerRef.setData(messageData)
+        
     }
     
     /* 두 사용자 간에 동일한 메시지 ID를 공유하고 있음 이렇게 해야 채팅이 두사람 모두에게 표시됨
